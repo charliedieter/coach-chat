@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "chat",
+    "slug": "aurlfriendlyname",
+    "privacy": "public",
+    "sdkVersion": "34.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.charliedieter.chat",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.592462264930-t012p9ntbdalojr5vvmkmfpb99m2lr1t"
+        }
+      }
+    },
+    "android": {
+      "package": "com.charliedieter.chat",
+      "googleServicesFile": "./google-services.json"
+    }
+  }
+}

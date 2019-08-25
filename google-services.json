@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "592462264930",
+    "firebase_url": "https://chat-52a02.firebaseio.com",
+    "project_id": "chat-52a02",
+    "storage_bucket": "chat-52a02.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592462264930:android:b86aaada51749017",
+        "android_client_info": {
+          "package_name": "com.charliedieter.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592462264930-v6gb5885nlhoh5vgu1lu91pnfiftto4g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-HoCSP6CXtWjxbIadRxeDB1Y6KOwc1Tw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592462264930-v6gb5885nlhoh5vgu1lu91pnfiftto4g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "592462264930-t012p9ntbdalojr5vvmkmfpb99m2lr1t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.charliedieter.chat"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
