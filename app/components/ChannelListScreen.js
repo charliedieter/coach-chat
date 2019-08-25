@@ -128,16 +128,16 @@ const goals = [
   }
 ];
 
-class SportPreview extends PureComponent {
+class GoalPreview extends PureComponent {
   channelPreviewButton = React.createRef();
-  // onSelectSport = () => {
+  // onSelectGoal = () => {
   //   this.props.setActiveChannel(this.props.channel);
   // };
 
   render() {
     return goals.map(({ name, icon }) => (
       <TouchableOpacity
-        key={`sport-list--${name}`}
+        key={`Goal-list--${name}`}
         style={{
           display: "flex",
           flexDirection: "row",
@@ -183,7 +183,7 @@ export default class ChannelListScreen extends PureComponent {
         <SafeAreaView>
           <Chat client={chatClient}>
             <View style={{ display: "flex", height: "100%" }}>
-              <SportPreview />
+              <GoalPreview />
             </View>
           </Chat>
         </SafeAreaView>
