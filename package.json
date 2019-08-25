@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "buffer": "^5.4.0",
     "expo": "^34.0.1",
     "expo-app-auth": "^6.0.0",
     "expo-constants": "^6.0.0",
