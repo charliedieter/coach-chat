@@ -12,7 +12,7 @@ const AppContainer = createAppContainer(
   createStackNavigator(
     {
       ChannelList: {
-        screen: ChannelListScreen
+        screen: Auth
       },
       Channel: {
         screen: ChannelScreen
@@ -41,6 +41,6 @@ export default class App extends React.Component {
     if (!this.state.isReady) {
       return <AppLoading />;
     }
-    return <AppContainer />;
+    return <Auth />;
   }
 }
