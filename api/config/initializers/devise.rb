@@ -298,47 +298,12 @@ Devise.setup do |config|
   # config.sign_in_after_change_password = true
 
   # OAuth
-  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], {
-    access_type: "offline",
-    prompt: "consent",
-    select_account: true,
-    provider_ignores_state: true,
-    scope: "plus.profile.emails.read,calendar,contacts"
-  }
+  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], 
+                  skip_jwt: true, # probably want to remove and replace with jwt_leeway: https://github.com/zquestz/omniauth-google-oauth2
+                  access_type: "offline",
+                  prompt: "consent",
+                  select_account: true,
+                  provider_ignores_state: true,
+                  scope: "userinfo.email, userinfo.profile"
 
-  # callback controller
-  class CallbacksController < Devise::OmniauthCallbacksController
-    include Devise::Controllers::Rememberable
-
-    def google_oauth2
-      puts 'got here somehow'
-      outcome = ::Users::FromOmniauth.run(auth: request.env["omniauth.auth"])
-
-      if outcome.valid?
-        user = outcome.result
-        remember_me(user)
-        sign_in(user)
-        redirect_to root_path
-      else
-        redirect_to new_user_registration_url
-      end
-    end
-
-    def google_oauth2_for_api
-      outcome = ::Users::FromOmniauth.run(auth: request.env["omniauth.auth"])
-
-      if outcome.valid?
-        user = outcome.result
-
-        auth_token = user.generate_auth_token # because I use https://github.com/gonzalo-bulnes/simple_token_authentication
-        render json: {
-          success: true,
-          auth_token: auth_token,
-          auth_email: user.email
-        }
-      else
-        render json: { success: false, message: "Invalid credentials"}, status: :unprocessable_entity
-      end
-    end
-  end
 end

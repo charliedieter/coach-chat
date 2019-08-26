@@ -7,19 +7,17 @@ const GOOGLE_WEB_APP_ID = "127131846404-1259o38imup4976lkif2cs75a24nfcnt.apps.go
 
 export default class extends Component {
   state = {
-    result: null
+    currentUser: null
   };
 
   render() {
     return (
       <View style={styles.container}>
         <Button title="Open Googs Auth" onPress={this._signinAsync} />
-        {this.state.result ? <Text>{JSON.stringify(this.state.result)}</Text> : null}
+        {this.state.currentUser ? <Text>{JSON.stringify(this.state.currentUser)}</Text> : null}
       </View>
     );
   }
-  // https://auth.expo.io/@cdieter/aurlfriendlyname
-  // "4/qQHyhYmyo58bq34NRopF0yCSCYQZoUBJLAONBz2SyqnC8_BK9le538GIiPKo5uo_oQ1P836yi9b0g97NWZOTBRo";
 
   _signinAsync = async () => {
     // make request to googs
@@ -33,32 +31,24 @@ export default class extends Component {
         `&response_type=code` +
         `&access_type=offline` +
         `&prompt=consent` +
-        `&scope=${encodeURIComponent(
-          "https://www.googleapis.com/auth/plus.profile.emails.read https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/contacts"
-        )}`
+        `&scope=${encodeURIComponent("email profile")}`
     });
 
-    // make request from rails
-    let result;
-    try {
-      result = await fetch({
-        api: "http://6781c85a.ngrok.io/users/auth/google_oauth2/callback",
-        method: "get",
-        params: {
-          code: googs.params.code,
-          redirect_uri: redirectUrl
-        }
-      });
-    } catch (error) {
-      console.log(error);
+    // make request to rails
+    const result = await fetch(
+      `http://localhost:3000/users/auth/google_oauth2/callback?code=${encodeURIComponent(
+        googs.params.code
+      )}&redirect_uri=${encodeURIComponent(redirectUrl)}`
+    );
+
+    const { success, user } = await result.json();
+
+    if (success === true) {
+      this.setState({ currentUser: JSON.parse(user) });
     }
-
-    console.log(result);
-
-    // const { auth_token, auth_email } = result.data;
-    // this.setState({ result });
   };
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

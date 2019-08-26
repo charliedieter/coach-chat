@@ -12,7 +12,7 @@ const AppContainer = createAppContainer(
   createStackNavigator(
     {
       ChannelList: {
-        screen: Auth
+        screen: ChannelListScreen
       },
       Channel: {
         screen: ChannelScreen
@@ -28,6 +28,7 @@ export default class App extends React.Component {
   state = {
     isReady: false
   };
+
   async componentDidMount() {
     await Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),

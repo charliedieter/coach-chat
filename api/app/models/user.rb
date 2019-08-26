@@ -6,13 +6,18 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:google_oauth2]
 
   def self.from_omniauth(access_token)
-    email = access_token.extra.id_info.email
+    email = access_token.info['email']
+    name = access_token.info['name']
+    image = access_token.info['image']
+
     user = User.where(email: email).first
+
     user ||= User.create(
-      name: 'later',
+      name: access_token.info['name'],
       email: email,
-      password: Devise.friendly_token[0,20]
+      password: Devise.friendly_token[0, 20]
     )
+
     user
   end
 end
