@@ -4,6 +4,7 @@ services:
     image: postgres
     volumes:
       - ./api/tmp/db:/var/lib/postgresql/data
+
   api:
     build: ./api
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
@@ -13,3 +14,14 @@ services:
       - "3000:3000"
     depends_on:
       - db
+# no worky yet
+# expo_ios:
+#   build: ./app
+#   volumes:
+#     - ./app:/app
+#   ports:
+#     - "19000:19000"
+#     - "19001:19001"
+#   depends_on:
+#     - db
+#     - api
