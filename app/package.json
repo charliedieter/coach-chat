@@ -11,7 +11,6 @@
     "buffer": "^5.4.0",
     "expo": "^34.0.1",
     "expo-app-auth": "^6.0.0",
-    "expo-cli": "^3.0.10",
     "expo-constants": "^6.0.0",
     "expo-font": "^6.0.1",
     "expo-google-sign-in": "^6.0.0",

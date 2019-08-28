@@ -1,11 +1,45 @@
+// https://reactnavigation.org/docs/en/auth-flow.html
 import React, { Component } from "react";
 import { AuthSession } from "expo";
+import {
+  ActivityIndicator,
+  AsyncStorage,
+  StatusBar,
+  Button,
+  StyleSheet,
+  Text,
+  View
+} from "react-native";
+const GOOGLE_WEB_APP_ID =
+  "127131846404-1259o38imup4976lkif2cs75a24nfcnt.apps.googleusercontent.com";
 
-import { Button, StyleSheet, Text, View } from "react-native";
+export class AuthLoadingScreen extends Component {
+  constructor(props) {
+    super(props);
+    this._bootstrapAsync();
+  }
 
-const GOOGLE_WEB_APP_ID = "127131846404-1259o38imup4976lkif2cs75a24nfcnt.apps.googleusercontent.com";
+  // Fetch the token from storage then navigate to our appropriate place
+  _bootstrapAsync = async () => {
+    const userToken = await AsyncStorage.getItem("userToken");
 
-export default class extends Component {
+    // This will switch to the App screen or Auth screen and this loading
+    // screen will be unmounted and thrown away.
+    this.props.navigation.navigate(userToken ? "App" : "Auth");
+  };
+
+  // Render any loading content that you like here
+  render() {
+    return (
+      <View>
+        <ActivityIndicator />
+        <StatusBar barStyle="default" />
+      </View>
+    );
+  }
+}
+
+export class SignInScreen extends Component {
   state = {
     currentUser: null
   };
@@ -14,15 +48,15 @@ export default class extends Component {
     return (
       <View style={styles.container}>
         <Button title="Open Googs Auth" onPress={this._signinAsync} />
-        {this.state.currentUser ? <Text>{JSON.stringify(this.state.currentUser)}</Text> : null}
+        {this.state.currentUser ? <Text>nah, dawg</Text> : null}
       </View>
     );
   }
 
   _signinAsync = async () => {
-    // make request to googs
     let redirectUrl = AuthSession.getRedirectUrl();
 
+    // make request to googs
     let googs = await AuthSession.startAsync({
       authUrl:
         `https://accounts.google.com/o/oauth2/v2/auth?` +
@@ -45,6 +79,8 @@ export default class extends Component {
 
     if (success === true) {
       this.setState({ currentUser: JSON.parse(user) });
+      await AsyncStorage.setItem("AURLFRIENDLYNAME_TOKEN", "hi");
+      this.props.navigation.navigate("App");
     }
   };
 }

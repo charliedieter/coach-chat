@@ -1,34 +1,14 @@
-import React from "react";
+import React, { Component } from "react";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
-import { createStackNavigator, createAppContainer } from "react-navigation";
 
-import ChannelScreen from "./components/ChannelScreen";
-import ChannelListScreen from "./components/ChannelListScreen";
-import Auth from "./components/Auth";
+import AppContainer from "./components/AppContainer";
 
-const AppContainer = createAppContainer(
-  createStackNavigator(
-    {
-      ChannelList: {
-        screen: ChannelListScreen
-      },
-      Channel: {
-        screen: ChannelScreen
-      }
-    },
-    {
-      initialRouteName: "ChannelList"
-    }
-  )
-);
-
-export default class App extends React.Component {
+export default class extends Component {
   state = {
-    isReady: false
+    ready: false
   };
-
   async componentDidMount() {
     await Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
@@ -36,12 +16,10 @@ export default class App extends React.Component {
       Montserrat_black: require("./assets/fonts/Montserrat/Montserrat-Black.ttf"),
       ...Ionicons.font
     });
-    this.setState({ isReady: true });
+    this.setState({ ready: true });
   }
+
   render() {
-    if (!this.state.isReady) {
-      return <AppLoading />;
-    }
-    return <Auth />;
+    return this.state.ready ? <AppContainer /> : <AppLoading />;
   }
 }
