@@ -11,7 +11,15 @@ export default StyleSheet.create({
   },
   image: { width: 128, borderRadius: 64, aspectRatio: 1 },
   text: { color: "#4B4453", fontSize: 16, fontWeight: "600" },
-  header2: { color: "#4B4453", fontSize: 16, fontFamily: "Montserrat_black" }
+  header1: {
+    width: "100%",
+    fontSize: 20,
+    textAlign: "center",
+    fontFamily: "Montserrat_black",
+    padding: 10,
+    margin: 0
+  },
+  header2: { color: "#4B4453", fontSize: 16 }
 });
 
 export const gradients = {

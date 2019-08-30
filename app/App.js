@@ -3,7 +3,7 @@ import { AppLoading } from "expo";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 
-import AppContainer from "./components/AppContainer";
+import AppContainer from "./containers/AppContainer";
 
 export default class extends Component {
   state = {
