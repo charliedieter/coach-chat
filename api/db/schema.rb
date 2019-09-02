@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_30_003232) do
+ActiveRecord::Schema.define(version: 2019_08_30_124857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,11 +36,26 @@ ActiveRecord::Schema.define(version: 2019_08_30_003232) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "coach_skills", force: :cascade do |t|
+    t.integer "coach_id"
+    t.integer "goal_id"
+    t.index ["coach_id", "goal_id"], name: "index_coach_skills_on_coach_id_and_goal_id", unique: true
+  end
+
   create_table "coaches", force: :cascade do |t|
     t.string "name"
     t.text "bio"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "coachings", force: :cascade do |t|
+    t.integer "athlete_id"
+    t.integer "coach_id"
+    t.integer "goal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["athlete_id", "coach_id", "goal_id"], name: "index_coachings_on_athlete_id_and_coach_id_and_goal_id", unique: true
   end
 
   create_table "goals", force: :cascade do |t|

@@ -1,9 +1,13 @@
 import React, { Component } from "react";
-import { AppLoading } from "expo";
+import { Provider } from "react-redux";
+import { Text } from "react-native";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 
-import AppContainer from "./containers/AppContainer";
+import AppContainer from "./navigation/AppNavigator";
+import configureStore from "./store";
+
+const store = configureStore();
 
 export default class extends Component {
   state = {
@@ -20,6 +24,10 @@ export default class extends Component {
   }
 
   render() {
-    return this.state.ready ? <AppContainer /> : <AppLoading />;
+    return (
+      <Provider store={store}>
+        {this.state.ready ? <AppContainer /> : <Text>loading...</Text>}
+      </Provider>
+    );
   }
 }

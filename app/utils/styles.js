@@ -9,6 +9,11 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: 24
   },
+  container2: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
   image: { width: 128, borderRadius: 64, aspectRatio: 1 },
   text: { color: "#4B4453", fontSize: 16, fontWeight: "600" },
   header1: {
