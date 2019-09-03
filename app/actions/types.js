@@ -1,3 +1,7 @@
 export const RECEIVE_USER = "RECEIVE_USER";
 export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const OPEN_MODAL = "OPEN_MODAL";
+export const CLOSE_MODAL = "CLOSE_MODAL";
+export const ADD_SUBSCRIPTION = "ADD_SUBSCRIPTION";
+export const RECEIVE_GOALS = "RECEIVE_GOALS";

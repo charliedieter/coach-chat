@@ -2,11 +2,12 @@
 
 class ApplicationController < ActionController::Base
   protect_from_forgery unless: -> { request.format.json? }
-  acts_as_token_authentication_handler_for User
 
-  private
+  # acts_as_token_authentication_handler_for User
 
-  def after_successful_token_authentication
-    renew_authentication_token!
-  end
+  # private
+
+  # def after_successful_token_authentication
+  #   renew_authentication_token!
+  # end
 end

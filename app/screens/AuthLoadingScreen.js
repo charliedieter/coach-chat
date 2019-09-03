@@ -17,11 +17,13 @@ class AuthLoadingScreen extends Component {
     const token = await AsyncStorage.getItem(AUTH_STORAGE_TOKEN);
 
     let next = "Auth";
+
+    const shouldOnboard = u => !Object.keys(u.subscriptions).length;
     if (currentUser) {
-      next = true ? "Onboard" : "Chat";
+      next = shouldOnboard(currentUser) ? "Onboard" : "ChannelList";
     } else if (token) {
-      const r = await verifyToken(token);
-      next = r && r.currentUser ? "Onboard" : "Auth";
+      const { currentUser } = await this.props.verifyToken(token);
+      next = shouldOnboard(currentUser) ? "Onboard" : "ChannelList";
     }
     navigation.navigate(next);
   };

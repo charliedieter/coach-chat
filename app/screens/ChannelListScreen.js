@@ -1,118 +1,93 @@
 import React, { PureComponent } from "react";
-import { View, SafeAreaView, TouchableOpacity } from "react-native";
-import { Chat } from "stream-chat-expo";
-import { Text } from "native-base";
+import { View, Image, ScrollView, TouchableOpacity, Text } from "react-native";
+import { connect } from "react-redux";
 
 import Icon from "../components/Icon";
-import chatClient from "../utils/chatClient";
-import { gradients } from "../utils/styles";
 import styles from "../utils/styles";
 
-const goals = [
-  {
-    name: "run",
-    icon: {
-      name: "running",
-      type: "FontAwesome5"
-    }
-  },
-  {
-    name: "bike",
-    icon: {
-      name: "bike",
-      type: "MaterialCommunityIcons"
-    }
-  },
-  {
-    name: "triathlon",
-    icon: {
-      name: "bike",
-      type: "MaterialCommunityIcons"
-    }
-  },
-  {
-    name: "swim",
-    icon: {
-      name: "swimmer",
-      type: "FontAwesome5"
-    }
-  },
-  {
-    name: "strength training",
-    icon: {
-      name: "weight-pound",
-      type: "MaterialCommunityIcons"
-    }
-  },
-  {
-    name: "bodybuilding",
-    icon: {
-      name: "weight-pound",
-      type: "MaterialCommunityIcons"
-    }
-  },
-  {
-    name: "lose weight",
-    icon: {
-      name: "weight",
-      type: "FontAwesome5"
-    }
-  }
-];
-
-class GoalPreview extends PureComponent {
-  channelPreviewButton = React.createRef();
+class ChannelPreview extends PureComponent {
+  onSelectChannel = () => {
+    const { id } = this.props;
+    this.props.navigation.navigate("Channel", {
+      id
+    });
+  };
 
   render() {
-    return goals.map(({ name, icon }) => (
-      <TouchableOpacity
-        key={`Goal-list--${name}`}
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          borderBottomColor: "#EBEBEB",
-          borderBottomWidth: 1,
-          padding: 20
-        }}
-        onPress={this.onSelectChannel}
-      >
-        <Icon type={icon.type} name={icon.name} size={10} />
-        <Text style={{ ...styles.header2, marginLeft: 10 }}>{name}</Text>
+    const {
+      coach,
+      goal: { icon_name, icon_type }
+    } = this.props;
+
+    return (
+      <TouchableOpacity onPress={this.onSelectChannel} style={styles.listItem}>
+        <View
+          style={{
+            width: "100%",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexDirection: "row"
+          }}
+        >
+          <View style={{ justifyContent: "center" }}>
+            <Image
+              style={{
+                height: 40,
+                width: 40,
+                borderRadius: 20,
+                marginBottom: 4
+              }}
+              source={{ uri: coach.avatar }}
+            />
+            <Text style={{ fontSize: 20 }}>{coach.name}</Text>
+          </View>
+          <Icon name={icon_name} type={icon_type} />
+        </View>
       </TouchableOpacity>
-    ));
+    );
   }
 }
 
-export default class ChannelListScreen extends PureComponent {
+class ChannelListScreen extends PureComponent {
   static navigationOptions = () => ({
     headerTitle: (
       <Text
         style={{
           width: "100%",
           fontSize: 28,
-          color: "white",
           textAlign: "center",
-          fontFamily: "Montserrat_black",
-          padding: 10,
-          paddingTop: 56,
-          margin: 0
+          fontFamily: "Montserrat_black"
         }}
       >
-        Your trainers
+        your trainers
       </Text>
     )
   });
 
   render() {
+    const {
+      currentUser: { name, subscriptions }
+    } = this.props;
+
     return (
-      <SafeAreaView>
-        <Chat client={chatClient}>
-          <View style={{ display: "flex", height: "100%" }}>
-            <GoalPreview />
-          </View>
-        </Chat>
-      </SafeAreaView>
+      <ScrollView>
+        <View style={{ display: "flex", height: "100%" }}>
+          {Object.values(subscriptions).map(subscription => (
+            <ChannelPreview
+              key={`channel-list-item--${subscription.id}`}
+              {...subscription}
+              navigation={this.props.navigation}
+            />
+          ))}
+        </View>
+      </ScrollView>
     );
   }
 }
+
+const msp = ({ session: { currentUser } }) => ({ currentUser });
+
+export default connect(
+  msp,
+  null
+)(ChannelListScreen);

@@ -22,9 +22,10 @@ export async function login() {
 
   const { success, user } = await railsResponse.json();
   if (success === true) {
-    const u = JSON.parse(user);
-    await AsyncStorage.setItem(AUTH_STORAGE_TOKEN, u.authentication_token);
-    return u;
+    console.log("pretty sure this needs debugging, esp refresh");
+    const user = JSON.parse(user);
+    await AsyncStorage.setItem(AUTH_STORAGE_TOKEN, user.authentication_token);
+    return user;
   }
 }
 
@@ -37,7 +38,8 @@ export async function verifyToken(authentication_token) {
       method: "POST",
       body: JSON.stringify({ authentication_token })
     });
-    return res.json();
+    const { user } = await res.json();
+    return user;
   } catch (e) {
     console.log(e);
   }

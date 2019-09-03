@@ -92,7 +92,7 @@ goal_count = Goal.count
 
 100.times do |idx|
   CoachSkill.find_or_create_by(
-    coach_id: idx,
+    coach_id: Coach.offset(rand(coach_count)).first.id,
     goal_id: Goal.offset(rand(goal_count)).first.id
   )
 end

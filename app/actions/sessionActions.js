@@ -2,7 +2,7 @@ import { RECEIVE_USER } from "./types";
 import { receiveErrors } from "./errorActions";
 import * as API from "../utils/sessionApi";
 
-const receiveCurrentUser = currentUser => ({
+export const receiveCurrentUser = currentUser => ({
   type: RECEIVE_USER,
   currentUser
 });

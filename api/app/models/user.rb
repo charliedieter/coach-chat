@@ -9,6 +9,8 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
 
+  has_many :subscriptions, foreign_key: :athlete_id, class_name: :Coaching
+
   def self.from_omniauth(access_token)
     email = access_token[:info][:email]
     user = User.where(email: email).first

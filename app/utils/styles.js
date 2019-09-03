@@ -14,6 +14,14 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
+  listItem: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    borderBottomColor: "#EBEBEB",
+    borderBottomWidth: 1,
+    padding: 20
+  },
   image: { width: 128, borderRadius: 64, aspectRatio: 1 },
   text: { color: "#4B4453", fontSize: 16, fontWeight: "600" },
   header1: {
@@ -24,7 +32,8 @@ export default StyleSheet.create({
     padding: 10,
     margin: 0
   },
-  header2: { color: "#4B4453", fontSize: 16 }
+  header2: { color: "#4B4453", fontSize: 16 },
+  content: { fontSize: 20, padding: 20, lineHeight: 30 }
 });
 
 export const gradients = {

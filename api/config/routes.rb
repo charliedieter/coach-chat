@@ -10,4 +10,10 @@ Rails.application.routes.draw do
   devise_scope :user do
     post 'users/auth/verify', to: 'users/sessions#verify'
   end
+
+  resources 'goals', only: [:index]
+  resources 'coaches', only: %i[index show]
+  resources 'subscriptions', only: %i[index show create delete]
+
+  mount ActionCable.server => '/cable'
 end

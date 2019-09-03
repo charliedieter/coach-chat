@@ -1,18 +1,16 @@
 import React, { Component } from "react";
-import { Provider } from "react-redux";
+import { Provider, connect } from "react-redux";
 import { Text } from "react-native";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 
 import AppContainer from "./navigation/AppNavigator";
 import configureStore from "./store";
+import { fetchGoals } from "./utils/goalsApi";
 
-const store = configureStore();
+class App extends Component {
+  state = {};
 
-export default class extends Component {
-  state = {
-    ready: false
-  };
   async componentDidMount() {
     await Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
@@ -20,14 +18,23 @@ export default class extends Component {
       Montserrat_black: require("./assets/fonts/Montserrat/Montserrat-Black.ttf"),
       ...Ionicons.font
     });
-    this.setState({ ready: true });
+
+    const initialGoals = await fetchGoals();
+
+    this.setState({ ready: true, initialGoals });
   }
 
   render() {
-    return (
-      <Provider store={store}>
-        {this.state.ready ? <AppContainer /> : <Text>loading...</Text>}
+    return this.state.ready ? (
+      <Provider
+        store={configureStore({ goals: this.state.initialGoals || {} })}
+      >
+        <AppContainer />
       </Provider>
+    ) : (
+      <Text>loading...</Text>
     );
   }
 }
+
+export default App;
