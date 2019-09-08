@@ -1,8 +1,13 @@
 import { AuthSession } from "expo";
 import { AsyncStorage } from "react-native";
-import { AUTH_STORAGE_TOKEN, GOOGLE_WEB_APP_ID } from "../utils/constants";
+import {
+  AUTH_STORAGE_TOKEN,
+  GOOGLE_WEB_APP_ID,
+  API_ROOT,
+  HEADERS
+} from "../utils/constants";
 
-export async function login() {
+export async function login(navigation) {
   const redirectUrl = AuthSession.getRedirectUrl();
   const googsResponse = await AuthSession.startAsync({
     authUrl:
@@ -15,31 +20,42 @@ export async function login() {
       `&scope=${encodeURIComponent("email profile")}`
   });
   const railsResponse = await fetch(
-    `http://localhost:3000/users/auth/google_oauth2/callback?code=${encodeURIComponent(
+    `${API_ROOT}/users/auth/google_oauth2/callback?code=${encodeURIComponent(
       googsResponse.params.code
     )}&redirect_uri=${encodeURIComponent(redirectUrl)}`
   );
 
-  const { success, user } = await railsResponse.json();
-  if (success === true) {
-    console.log("pretty sure this needs debugging, esp refresh");
-    const user = JSON.parse(user);
-    await AsyncStorage.setItem(AUTH_STORAGE_TOKEN, user.authentication_token);
-    return user;
-  }
+  let { success, user } = await railsResponse.json();
+  await AsyncStorage.setItem(AUTH_STORAGE_TOKEN, user.authentication_token);
+  await navigation.navigate("AuthLoading");
+  return user;
 }
 
 export async function verifyToken(authentication_token) {
   try {
-    const res = await fetch(`http://localhost:3000/users/auth/verify`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
+    const res = await fetch(`${API_ROOT}/users/auth/verify`, {
+      headers: HEADERS,
       method: "POST",
       body: JSON.stringify({ authentication_token })
     });
     const { user } = await res.json();
     return user;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function logout(navigation) {
+  try {
+    await AsyncStorage.removeItem(AUTH_STORAGE_TOKEN);
+
+    const res = await fetch(`${API_ROOT}/users/sign_out`, {
+      headers: HEADERS,
+      method: "DELETE"
+    });
+    const r = await res.json();
+    navigation.navigate("AuthLoading");
+    return r;
   } catch (e) {
     console.log(e);
   }

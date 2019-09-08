@@ -5,3 +5,6 @@ export const OPEN_MODAL = "OPEN_MODAL";
 export const CLOSE_MODAL = "CLOSE_MODAL";
 export const ADD_SUBSCRIPTION = "ADD_SUBSCRIPTION";
 export const RECEIVE_GOALS = "RECEIVE_GOALS";
+export const NEW_MESSAGE = "NEW_MESSAGE";
+export const RECEIVE_MESSAGES = "RECEIVE_MESSAGES";
+export const REMOVE_USER = "REMOVE_USER";

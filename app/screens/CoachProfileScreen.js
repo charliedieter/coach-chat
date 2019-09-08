@@ -5,6 +5,7 @@ import styles from "../utils/styles";
 import Modal from "../components/Modal";
 import { OPEN_MODAL } from "../actions/types";
 import { createSubscription } from "../actions/subscriptionsActions";
+import { API_ROOT } from "../utils/constants";
 
 class CoachProfile extends Component {
   state = {};
@@ -19,7 +20,7 @@ class CoachProfile extends Component {
 
   async componentDidMount() {
     const id = this.props.navigation.getParam("id");
-    const res = await fetch(`http://localhost:3000/coaches/${id}`);
+    const res = await fetch(`${API_ROOT}/coaches/${id}`);
     const { coach } = await res.json();
     this.setState({
       coach,

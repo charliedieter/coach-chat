@@ -1,55 +1,30 @@
 import React, { PureComponent } from "react";
-import { View, Image, ScrollView, TouchableOpacity, Text } from "react-native";
+import { View, ScrollView, Text, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 
 import Icon from "../components/Icon";
+import ChannelPreview from "../components/ChannelPreview";
 import styles from "../utils/styles";
 
-class ChannelPreview extends PureComponent {
-  onSelectChannel = () => {
-    const { id } = this.props;
-    this.props.navigation.navigate("Channel", {
-      id
-    });
-  };
-
-  render() {
-    const {
-      coach,
-      goal: { icon_name, icon_type }
-    } = this.props;
-
-    return (
-      <TouchableOpacity onPress={this.onSelectChannel} style={styles.listItem}>
-        <View
-          style={{
-            width: "100%",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexDirection: "row"
-          }}
-        >
-          <View style={{ justifyContent: "center" }}>
-            <Image
-              style={{
-                height: 40,
-                width: 40,
-                borderRadius: 20,
-                marginBottom: 4
-              }}
-              source={{ uri: coach.avatar }}
-            />
-            <Text style={{ fontSize: 20 }}>{coach.name}</Text>
-          </View>
-          <Icon name={icon_name} type={icon_type} />
-        </View>
-      </TouchableOpacity>
-    );
-  }
-}
-
 class ChannelListScreen extends PureComponent {
-  static navigationOptions = () => ({
+  static navigationOptions = ({ navigation }) => ({
+    drawerLabel: "Train",
+    drawerIcon: ({ tintColor }) => (
+      <Icon
+        name="chat-bubble-outline"
+        type="MaterialIcons"
+        style={{ height: 24, width: 24, color: "#000" }}
+      />
+    ),
+    headerRight: (
+      <TouchableOpacity onPress={navigation.toggleDrawer}>
+        <Icon
+          type="MaterialCommunityIcons"
+          name="hamburger"
+          style={{ height: 24, width: 24 }}
+        />
+      </TouchableOpacity>
+    ),
     headerTitle: (
       <Text
         style={{
@@ -64,10 +39,18 @@ class ChannelListScreen extends PureComponent {
     )
   });
 
+  componentDidUpdate(p) {
+    if (!this.props.currentUser) {
+      this.props.navigation.navigate("AuthLoading");
+    }
+  }
+
   render() {
-    const {
-      currentUser: { name, subscriptions }
-    } = this.props;
+    const { currentUser } = this.props;
+
+    if (!currentUser) return null;
+
+    const { subscriptions } = currentUser;
 
     return (
       <ScrollView>

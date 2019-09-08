@@ -2,8 +2,8 @@
 
 class MessagesChannel < ApplicationCable::Channel
   def subscribed
-    subscription = Coaching.find(params[:subscription])
-    stream_for subscription
+    coaching = Coaching.find(params[:coaching_id])
+    stream_for coaching
   end
 
   def unsubscribed; end

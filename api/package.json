@@ -1,5 +1,7 @@
 {
   "name": "api",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "react-navigation-drawer": "^2.1.0"
+  }
 }

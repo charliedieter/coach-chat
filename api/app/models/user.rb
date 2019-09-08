@@ -21,6 +21,12 @@ class User < ApplicationRecord
       password: Devise.friendly_token[0, 20]
     )
 
+    # user.avatar.attach(
+    #   io: File.open(File.join(Rails.root, 'stock-images', "#{rand(1..9)}.jpg")),
+    #   filename: "#{c[:id]}--avatar.jpg",
+    #   content_type: 'image/jpg'
+    # )
+
     user
   end
 end

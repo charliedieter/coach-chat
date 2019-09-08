@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, ScrollView, Image, Text, TouchableOpacity } from "react-native";
 
 import styles from "../utils/styles";
+import { API_ROOT } from "../utils/constants";
 
 export default class extends Component {
   state = {};
@@ -16,7 +17,7 @@ export default class extends Component {
   async componentDidMount() {
     const goal = this.props.navigation.getParam("name");
     const res = await fetch(
-      `http://localhost:3000/coaches?goal=${encodeURIComponent(goal)}`
+      `${API_ROOT}/coaches?goal=${encodeURIComponent(goal)}`
     );
     const { coaches } = await res.json();
 
@@ -57,6 +58,10 @@ export default class extends Component {
                   />
                   <Text style={{ ...styles.header2, marginLeft: 10 }}>
                     {name}
+                    <Button
+                      title="togs"
+                      onPress={this.props.navigation.toggleDrawer}
+                    />
                   </Text>
                 </TouchableOpacity>
               );
