@@ -33,7 +33,37 @@ export default StyleSheet.create({
     margin: 0
   },
   header2: { color: "#4B4453", fontSize: 16 },
-  content: { fontSize: 20, padding: 20, lineHeight: 30 }
+  input: {
+    height: 40,
+    borderWidth: 1,
+    borderColor: "rgba(0,0,0,.1)",
+    width: "100%",
+    padding: 10,
+    shadowOpacity: 0.2,
+    shadowRadius: 1.5,
+    shadowOffset: { width: 0, height: 1 },
+    overflow: "visible",
+    shadowColor: "black",
+    backgroundColor: "white",
+    borderRadius: 4
+  },
+  content: { fontSize: 20, padding: 20, lineHeight: 30 },
+  touchable: {
+    shadowOpacity: 0.2,
+    shadowRadius: 1.5,
+    shadowOffset: { width: 0, height: 1 },
+    overflow: "visible",
+    shadowColor: "black",
+    backgroundColor: "white",
+    borderRadius: 4
+  },
+  content: {
+    flexDirection: "row",
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    alignItems: "center",
+    justifyContent: "space-between"
+  }
 });
 
 export const gradients = {

@@ -15,19 +15,19 @@ export default class extends PureComponent {
     return (
       <TouchableOpacity
         activeOpacity={0.6}
-        style={StyleSheet.flatten([styles.touchable, style])}
+        style={StyleSheet.flatten([buttonStyles.touchable, style])}
         {...props}
       >
-        <View style={styles.content}>
-          <Image source={googleIcon} style={styles.icon} />
-          <Text style={styles.text}>{children}</Text>
+        <View style={buttonStyles.content}>
+          <Image source={googleIcon} style={buttonStyles.icon} />
+          <Text style={buttonStyles.text}>{children}</Text>
         </View>
       </TouchableOpacity>
     );
   }
 }
 
-const styles = StyleSheet.create({
+const buttonStyles = StyleSheet.create({
   touchable: {
     shadowOpacity: 0.2,
     shadowRadius: 1.5,

@@ -20,10 +20,10 @@ class AuthLoadingScreen extends Component {
 
     const shouldOnboard = u => !Object.keys(u.subscriptions).length;
     if (currentUser) {
-      next = shouldOnboard(currentUser) ? "Onboard" : "ChannelList";
+      next = shouldOnboard(currentUser) ? "CoachList" : "ChannelList";
     } else if (token) {
       const { currentUser } = await this.props.verifyToken(token);
-      next = shouldOnboard(currentUser) ? "Onboard" : "ChannelList";
+      next = shouldOnboard(currentUser) ? "CoachList" : "ChannelList";
     }
     navigation.navigate(next);
   };

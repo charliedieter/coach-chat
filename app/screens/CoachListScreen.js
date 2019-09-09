@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { View, ScrollView, Image, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  ScrollView,
+  Image,
+  Text,
+  TouchableOpacity,
+  Button
+} from "react-native";
 
 import styles from "../utils/styles";
 import { API_ROOT } from "../utils/constants";
@@ -58,10 +65,6 @@ export default class extends Component {
                   />
                   <Text style={{ ...styles.header2, marginLeft: 10 }}>
                     {name}
-                    <Button
-                      title="togs"
-                      onPress={this.props.navigation.toggleDrawer}
-                    />
                   </Text>
                 </TouchableOpacity>
               );

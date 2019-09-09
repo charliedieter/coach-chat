@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { SafeAreaView, Button, Text, TouchableOpacity } from "react-native";
+import {
+  SafeAreaView,
+  Button,
+  Text,
+  TouchableOpacity,
+  Image
+} from "react-native";
 import Icon from "../components/Icon";
 import { logout } from "../actions/sessionActions";
 import styles from "../utils/styles";
@@ -37,15 +43,31 @@ class UserProfile extends Component {
       </Text>
     )
   });
+  componentDidUpdate() {
+    if (this.props.currentUser) {
+      this.props.navigation.navigate("AuthLoading");
+    }
+  }
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, currentUser } = this.props;
+
+    if (!currentUser) return null;
+
+    const { avatar, name } = currentUser;
     return (
       <SafeAreaView style={{ justifyContent: "center", alignItems: "center" }}>
-        <Button
-          title="log out"
-          onPress={() => this.props.logout(navigation)}
-        ></Button>
+        <Image
+          style={{
+            width: 30,
+            height: 30,
+            borderRadius: 15
+          }}
+          source={{
+            uri: avatar
+          }}
+        />
+        <Button title="log out" onPress={() => this.props.logout(navigation)} />
       </SafeAreaView>
     );
   }

@@ -3,7 +3,7 @@ import { createSwitchNavigator, createAppContainer } from "react-navigation";
 import AuthLoadingScreen from "../screens/AuthLoadingScreen";
 import AuthNavigator from "./AuthNavigator";
 import ChatNavigator from "./ChatNavigator";
-import OnboardNavigator from "./OnboardNavigator";
+import CoachListNavigator from "./CoachListNavigator";
 
 export default createAppContainer(
   createSwitchNavigator(
@@ -11,7 +11,7 @@ export default createAppContainer(
       Auth: AuthNavigator,
       AuthLoading: AuthLoadingScreen,
       Chat: ChatNavigator,
-      Onboard: OnboardNavigator
+      CoachList: CoachListNavigator
     },
     {
       initialRouteName: "AuthLoading"

@@ -1,7 +1,9 @@
-import { NEW_MESSAGE, RECEIVE_MESSAGES } from "./types";
+import { NEW_MESSAGE, REQUEST_MESSAGES, RECEIVE_MESSAGES } from "./types";
 import { API_ROOT } from "../utils/constants";
 
 export const getChatHistory = coaching_id => dispatch => {
+  dispatch({ type: REQUEST_MESSAGES });
+
   fetch(`${API_ROOT}/messages?coaching_id=${coaching_id}`).then(m => {
     m.json().then(messages => {
       dispatch({

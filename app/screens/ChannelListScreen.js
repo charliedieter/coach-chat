@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { View, ScrollView, Text, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
+import Swipeout from "react-native-swipeout";
 
 import Icon from "../components/Icon";
 import ChannelPreview from "../components/ChannelPreview";
@@ -51,16 +52,30 @@ class ChannelListScreen extends PureComponent {
     if (!currentUser) return null;
 
     const { subscriptions } = currentUser;
+    let swipeBtns = [
+      {
+        text: "Delete",
+        backgroundColor: "red",
+        onPress: () => {
+          console.log("hi");
+        }
+      }
+    ];
 
     return (
       <ScrollView>
         <View style={{ display: "flex", height: "100%" }}>
           {Object.values(subscriptions).map(subscription => (
-            <ChannelPreview
+            <Swipeout
+              right={swipeBtns}
+              backgroundColor="transparent"
               key={`channel-list-item--${subscription.id}`}
-              {...subscription}
-              navigation={this.props.navigation}
-            />
+            >
+              <ChannelPreview
+                {...subscription}
+                navigation={this.props.navigation}
+              />
+            </Swipeout>
           ))}
         </View>
       </ScrollView>

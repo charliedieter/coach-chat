@@ -44,7 +44,7 @@ class GoalsListScreen extends PureComponent {
 
 const msp = ({ goals }) => {
   return {
-    goals
+    goals: Object.values(goals)
   };
 };
 

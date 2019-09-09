@@ -1,5 +1,6 @@
 import ActionCable from "react-native-actioncable";
 import { API_WS_ROOT } from "./constants";
+import * as _ from "lodash";
 
 export default function cableMiddleware() {
   const cable = ActionCable.createConsumer(`${API_WS_ROOT}/cable`);

@@ -298,12 +298,13 @@ Devise.setup do |config|
   # config.sign_in_after_change_password = true
 
   # OAuth
-  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], 
+  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'],
                   skip_jwt: true, # probably want to remove and replace with jwt_leeway: https://github.com/zquestz/omniauth-google-oauth2
-                  access_type: "offline",
-                  prompt: "consent",
+                  access_type: 'offline',
+                  prompt: 'consent',
                   select_account: true,
                   provider_ignores_state: true,
-                  scope: "userinfo.email, userinfo.profile"
-
+                  scope: 'userinfo.email, userinfo.profile, http://gdata.youtube.com',
+                  image_aspect_ratio: 'square',
+                  image_size: 50
 end

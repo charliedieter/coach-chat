@@ -7,6 +7,7 @@ import styles from "../utils/styles";
 export default class ChannelPreview extends PureComponent {
   onSelectChannel = () => {
     const { id, goal, coach } = this.props;
+
     this.props.navigation.navigate("Channel", {
       id,
       goal,

@@ -11,7 +11,13 @@ import {
 } from "react-native";
 
 import Icon from "../components/Icon";
-import { getChatHistory, subscribeConversation } from "../actions/chatActions";
+import Loader from "../components/Loader";
+import {
+  getChatHistory,
+  subscribeConversation,
+  unsubscribeConversation
+} from "../actions/chatActions";
+import { CLEAR_MESSAGES } from "../actions/types";
 import { API_ROOT, HEADERS } from "../utils/constants";
 import styles from "../utils/styles";
 
@@ -26,6 +32,12 @@ class ChannelScreen extends Component {
     this.props.subscribe(id);
   }
 
+  componentWillUnmount() {
+    const id = this.props.navigation.getParam("id");
+    this.props.clearMessages();
+    this.props.unsubscribe(id);
+  }
+
   onChangeText = text => this.setState({ text });
 
   send = async () => {
@@ -37,6 +49,7 @@ class ChannelScreen extends Component {
     const body = JSON.stringify({
       message: { text, coaching_id: id, author_id: currentUser.id }
     });
+
     await fetch(`${API_ROOT}/messages`, {
       method: "POST",
       headers: HEADERS,
@@ -47,9 +60,12 @@ class ChannelScreen extends Component {
   };
 
   render() {
+    if (this.props.isLoading) return <Loader />;
+
     const { text } = this.state;
     const { messages, currentUser } = this.props;
     const coach = this.props.navigation.getParam("coach");
+
     return (
       <SafeAreaView>
         <View
@@ -59,7 +75,13 @@ class ChannelScreen extends Component {
             justifyContent: "space-between"
           }}
         >
-          <ScrollView style={{ height: "94%" }}>
+          <ScrollView
+            style={{ height: "94%" }}
+            ref={ref => (this.scrollView = ref)}
+            onContentSizeChange={(contentWidth, contentHeight) => {
+              this.scrollView.scrollToEnd({ animated: true });
+            }}
+          >
             {messages.length ? (
               messages.map(m => {
                 const isMine = m.author_id === currentUser.id;
@@ -76,7 +98,7 @@ class ChannelScreen extends Component {
                     <Image
                       style={{ width: 40, height: 40, borderRadius: 20 }}
                       source={{
-                        uri: isMine ? "" : coach.avatar
+                        uri: isMine ? currentUser.avatar : coach.avatar
                       }}
                     />
                     <Text style={{ marginHorizontal: 12 }}>{m.text}</Text>
@@ -126,14 +148,17 @@ class ChannelScreen extends Component {
   }
 }
 
-const msp = ({ session: { currentUser }, messages }) => ({
+const msp = ({ session: { currentUser }, messages, ui: { isLoading } }) => ({
   currentUser,
-  messages
+  messages,
+  isLoading
 });
 
 const mdp = dispatch => ({
   subscribe: id => dispatch(subscribeConversation(id)),
-  getChatHistory: id => dispatch(getChatHistory(id))
+  unsubscribe: id => dispatch(unsubscribeConversation(id)),
+  getChatHistory: id => dispatch(getChatHistory(id)),
+  clearMessages: () => dispatch({ type: CLEAR_MESSAGES })
 });
 
 export default connect(
