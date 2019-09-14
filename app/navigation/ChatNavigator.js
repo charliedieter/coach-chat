@@ -1,11 +1,16 @@
+import React from "react";
+
 import { createStackNavigator } from "react-navigation";
 import { createDrawerNavigator } from "react-navigation-drawer";
+import { TouchableOpacity } from "react-native";
 
 import CoachListNavigator from "./CoachListNavigator";
 
 import ChannelListScreen from "../screens/ChannelListScreen";
 import ChannelScreen from "../screens/ChannelScreen";
 import UserProfileScreen from "../screens/UserProfileScreen";
+import SideMenu from "../components/SideMenu";
+import Icon from "../components/Icon";
 
 const chatStack = createStackNavigator(
   {
@@ -17,7 +22,18 @@ const chatStack = createStackNavigator(
     }
   },
   {
-    initialRouteName: "ChannelList"
+    initialRouteName: "ChannelList",
+    defaultNavigationOptions: nav => ({
+      headerRight: (
+        <TouchableOpacity onPress={nav.toggleDrawer}>
+          <Icon
+            type="MaterialCommunityIcons"
+            name="hamburger"
+            style={{ height: 24, width: 24 }}
+          />
+        </TouchableOpacity>
+      )
+    })
   }
 );
 
@@ -32,6 +48,8 @@ export default createDrawerNavigator(
     Coaches: { screen: CoachListNavigator }
   },
   {
+    contentComponent: SideMenu,
+    drawerWidth: 300,
     drawerPosition: "right",
     drawerType: "back"
   }

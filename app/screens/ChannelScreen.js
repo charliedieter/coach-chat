@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {
   View,
   SafeAreaView,
@@ -7,64 +7,70 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Image
-} from "react-native";
+  Image,
+} from 'react-native'
 
-import Icon from "../components/Icon";
-import Loader from "../components/Loader";
+import DrawerIcon from '../components/DrawerIcon'
+
+import Icon from '../components/Icon'
+import Loader from '../components/Loader'
 import {
   getChatHistory,
   subscribeConversation,
-  unsubscribeConversation
-} from "../actions/chatActions";
-import { CLEAR_MESSAGES } from "../actions/types";
-import { API_ROOT, HEADERS } from "../utils/constants";
-import styles from "../utils/styles";
+  unsubscribeConversation,
+} from '../actions/chatActions'
+import { CLEAR_MESSAGES } from '../actions/types'
+import { API_ROOT, HEADERS } from '../utils/constants'
+import styles from '../utils/styles'
 
 class ChannelScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    headerRight: <DrawerIcon navigation={navigation} />,
+  })
+
   state = {
-    text: ""
-  };
+    text: '',
+    id: null,
+  }
 
   componentDidMount() {
-    const id = this.props.navigation.getParam("id");
-    this.props.getChatHistory(id);
-    this.props.subscribe(id);
+    console.log(this.props)
+    const id = this.props.navigation.getParam('id')
+    this.setState({ id }, () => this.props.getChatHistory(id))
   }
 
   componentWillUnmount() {
-    const id = this.props.navigation.getParam("id");
-    this.props.clearMessages();
-    this.props.unsubscribe(id);
+    this.props.clearMessages()
+    this.props.unsubscribe(this.state.id)
   }
 
-  onChangeText = text => this.setState({ text });
+  onChangeText = text => this.setState({ text })
 
   send = async () => {
-    const { text } = this.state;
-    if (!text) return;
-    const { currentUser } = this.props;
+    const { text } = this.state
+    if (!text) return
+    const { currentUser } = this.props
 
-    const id = this.props.navigation.getParam("id");
+    const id = this.props.navigation.getParam('id')
     const body = JSON.stringify({
-      message: { text, coaching_id: id, author_id: currentUser.id }
-    });
+      message: { text, coaching_id: id, author_id: currentUser.id },
+    })
 
     await fetch(`${API_ROOT}/messages`, {
-      method: "POST",
+      method: 'POST',
       headers: HEADERS,
-      body
-    });
+      body,
+    })
 
-    this.setState({ text: "" });
-  };
+    this.setState({ text: '' })
+  }
 
   render() {
-    if (this.props.isLoading) return <Loader />;
+    if (this.props.isLoading) return <Loader />
 
-    const { text } = this.state;
-    const { messages, currentUser } = this.props;
-    const coach = this.props.navigation.getParam("coach");
+    const { text } = this.state
+    const { messages, currentUser } = this.props
+    const coach = this.props.navigation.getParam('coach')
 
     return (
       <SafeAreaView>
@@ -72,45 +78,45 @@ class ChannelScreen extends Component {
           style={{
             paddingHorizontal: 16,
             paddingVertical: 12,
-            justifyContent: "space-between"
+            justifyContent: 'space-between',
           }}
         >
           <ScrollView
-            style={{ height: "94%" }}
+            style={{ height: '94%' }}
             ref={ref => (this.scrollView = ref)}
             onContentSizeChange={(contentWidth, contentHeight) => {
-              this.scrollView.scrollToEnd({ animated: true });
+              this.scrollView.scrollToEnd({ animated: true })
             }}
           >
             {messages.length ? (
               messages.map(m => {
-                const isMine = m.author_id === currentUser.id;
+                const isMine = m.author_id === currentUser.id
                 return (
                   <View
                     key={m.id}
                     style={{
-                      flexDirection: isMine ? "row-reverse" : "row",
-                      alignItems: "center",
+                      flexDirection: isMine ? 'row-reverse' : 'row',
+                      alignItems: 'center',
                       paddingVertical: 4,
-                      paddingHorizontal: 8
+                      paddingHorizontal: 8,
                     }}
                   >
                     <Image
                       style={{ width: 40, height: 40, borderRadius: 20 }}
                       source={{
-                        uri: isMine ? currentUser.avatar : coach.avatar
+                        uri: isMine ? currentUser.avatar : coach.avatar,
                       }}
                     />
                     <Text style={{ marginHorizontal: 12 }}>{m.text}</Text>
                   </View>
-                );
+                )
               })
             ) : (
-              <View style={{ alignItems: "center" }}>
+              <View style={{ alignItems: 'center' }}>
                 <Image
                   style={{ width: 80, height: 80, borderRadius: 40 }}
                   source={{
-                    uri: coach.avatar
+                    uri: coach.avatar,
                   }}
                 />
                 <Text style={styles.header1}>
@@ -121,19 +127,19 @@ class ChannelScreen extends Component {
           </ScrollView>
           <View
             style={{
-              flexDirection: "row",
-              alignItems: "center",
-              height: "6%"
+              flexDirection: 'row',
+              alignItems: 'center',
+              height: '6%',
             }}
           >
             <TextInput
               style={{
                 height: 40,
-                borderColor: "gray",
+                borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 30,
                 padding: 10,
-                flex: 1
+                flex: 1,
               }}
               onChangeText={this.onChangeText}
               value={text}
@@ -144,24 +150,24 @@ class ChannelScreen extends Component {
           </View>
         </View>
       </SafeAreaView>
-    );
+    )
   }
 }
 
 const msp = ({ session: { currentUser }, messages, ui: { isLoading } }) => ({
   currentUser,
   messages,
-  isLoading
-});
+  isLoading,
+})
 
 const mdp = dispatch => ({
   subscribe: id => dispatch(subscribeConversation(id)),
   unsubscribe: id => dispatch(unsubscribeConversation(id)),
   getChatHistory: id => dispatch(getChatHistory(id)),
-  clearMessages: () => dispatch({ type: CLEAR_MESSAGES })
-});
+  clearMessages: () => dispatch({ type: CLEAR_MESSAGES }),
+})
 
 export default connect(
   msp,
-  mdp
-)(ChannelScreen);
+  mdp,
+)(ChannelScreen)

@@ -1,8 +1,9 @@
-import React from "react";
-import { View, ActivityIndicator } from "react-native";
+import React from 'react'
+import { View, ActivityIndicator, StatusBar } from 'react-native'
 
 export default () => (
-  <View style={{ height: "100%", justifyContent: "center" }}>
-    <ActivityIndicator size="large" color="#000" />
+  <View style={{ height: '100%', justifyContent: 'center' }}>
+    <ActivityIndicator />
+    <StatusBar barStyle="default" />
   </View>
-);
+)

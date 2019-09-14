@@ -1,85 +1,83 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native'
+
+export const colors = {
+  grey: '#C7CAE0',
+  blue: '#608DF7',
+  white: '#F7F9FF',
+  green: '#E6F4F1',
+  plum: '#4b4453',
+  black: '#434655',
+  red: '#F15F77',
+  flatGrey: '#A8AABC',
+}
 
 export default StyleSheet.create({
   container: {
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingHorizontal: 16,
     paddingVertical: 12,
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 24
-  },
-  container2: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: colors.white,
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
   },
-  listItem: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    borderBottomColor: "#EBEBEB",
-    borderBottomWidth: 1,
-    padding: 20
-  },
-  image: { width: 128, borderRadius: 64, aspectRatio: 1 },
-  text: { color: "#4B4453", fontSize: 16, fontWeight: "600" },
-  header1: {
-    width: "100%",
-    fontSize: 20,
-    textAlign: "center",
-    fontFamily: "Montserrat_black",
-    padding: 10,
-    margin: 0
-  },
-  header2: { color: "#4B4453", fontSize: 16 },
-  input: {
-    height: 40,
-    borderWidth: 1,
-    borderColor: "rgba(0,0,0,.1)",
-    width: "100%",
-    padding: 10,
-    shadowOpacity: 0.2,
-    shadowRadius: 1.5,
-    shadowOffset: { width: 0, height: 1 },
-    overflow: "visible",
-    shadowColor: "black",
-    backgroundColor: "white",
-    borderRadius: 4
+  primaryPage: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.green,
   },
   content: { fontSize: 20, padding: 20, lineHeight: 30 },
+
+  header1: {
+    width: '100%',
+    fontSize: 20,
+    textAlign: 'center',
+    fontFamily: 'Montserrat_black',
+    padding: 10,
+    margin: 0,
+  },
+  header2: { color: colors.black, fontSize: 16 },
+
+  listItem: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomColor: colors.grey,
+    borderBottomWidth: 1,
+    padding: 20,
+  },
+  text: {
+    color: colors.black,
+    fontSize: 16,
+    marginHorizontal: 10,
+  },
+
   touchable: {
     shadowOpacity: 0.2,
     shadowRadius: 1.5,
     shadowOffset: { width: 0, height: 1 },
-    overflow: "visible",
-    shadowColor: "black",
-    backgroundColor: "white",
-    borderRadius: 4
+    overflow: 'visible',
+    shadowColor: colors.black,
+    backgroundColor: colors.white,
+    borderRadius: 4,
   },
-  content: {
-    flexDirection: "row",
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    alignItems: "center",
-    justifyContent: "space-between"
-  }
-});
+})
 
-export const gradients = {
-  primary: [
-    "#845ec2",
-    "#965dc0",
-    "#a75dbe",
-    "#b75cbb",
-    "#c55cb7",
-    "#d05cb3",
-    "#da5dae",
-    "#e35fa9",
-    "#ec62a3",
-    "#f3659d",
-    "#fa6a97",
-    "#ff6f91"
-  ],
-  secondary: ["#fff", "#FEF7FF"]
-};
+// export const gradients = {
+//   primary: [
+//     "#845ec2",
+//     "#965dc0",
+//     "#a75dbe",
+//     "#b75cbb",
+//     "#c55cb7",
+//     "#d05cb3",
+//     "#da5dae",
+//     "#e35fa9",
+//     "#ec62a3",
+//     "#f3659d",
+//     "#fa6a97",
+//     "#ff6f91"
+//   ],
+//   secondary: ["#fff", "#FEF7FF"]
+// };

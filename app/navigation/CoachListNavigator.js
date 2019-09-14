@@ -1,10 +1,13 @@
+import React from "react";
+import { TouchableOpacity } from "react-native";
 import { createStackNavigator } from "react-navigation";
 
 import CoachListScreen from "../screens/CoachListScreen";
 import CoachProfileScreen from "../screens/CoachProfileScreen";
 import GoalListScreen from "../screens/GoalListScreen";
+import Icon from "../components/Icon";
 
-export default createStackNavigator(
+const stack = createStackNavigator(
   {
     GoalList: {
       screen: GoalListScreen
@@ -20,3 +23,5 @@ export default createStackNavigator(
     initialRouteName: "GoalList"
   }
 );
+
+export default stack;

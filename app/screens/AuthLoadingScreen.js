@@ -1,50 +1,46 @@
 // https://reactnavigation.org/docs/en/auth-flow.html
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { ActivityIndicator, AsyncStorage, StatusBar, View } from "react-native";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { AsyncStorage } from 'react-native'
 
-import { verifyToken } from "../actions/sessionActions";
-import { AUTH_STORAGE_TOKEN } from "../utils/constants";
+import Loader from '../components/Loader'
+import { verifyToken } from '../actions/sessionActions'
+import { AUTH_STORAGE_TOKEN } from '../utils/constants'
 
 class AuthLoadingScreen extends Component {
   constructor(props) {
-    super(props);
-    this._bootstrapAsync();
+    super(props)
+    this.onboardRedirect()
   }
 
-  _bootstrapAsync = async () => {
-    const { navigation, currentUser, verifyToken } = this.props;
-    const token = await AsyncStorage.getItem(AUTH_STORAGE_TOKEN);
+  onboardRedirect = async () => {
+    const { navigation, currentUser } = this.props
+    const token = await AsyncStorage.getItem(AUTH_STORAGE_TOKEN)
 
-    let next = "Auth";
+    let next = 'Auth'
 
-    const shouldOnboard = u => !Object.keys(u.subscriptions).length;
+    const shouldOnboard = u => !Object.keys(u.subscriptions).length
     if (currentUser) {
-      next = shouldOnboard(currentUser) ? "CoachList" : "ChannelList";
+      next = shouldOnboard(currentUser) ? 'CoachList' : 'ChannelList'
     } else if (token) {
-      const { currentUser } = await this.props.verifyToken(token);
-      next = shouldOnboard(currentUser) ? "CoachList" : "ChannelList";
+      const { currentUser } = await this.props.verifyToken(token)
+      next = shouldOnboard(currentUser) ? 'CoachList' : 'ChannelList'
     }
-    navigation.navigate(next);
-  };
+    navigation.navigate(next)
+  }
 
   render() {
-    return (
-      <View>
-        <ActivityIndicator />
-        <StatusBar barStyle="default" />
-      </View>
-    );
+    return <Loader />
   }
 }
 
-const msp = ({ session }) => session;
+const msp = ({ session }) => session
 
 const mdp = dispatch => ({
-  verifyToken: t => dispatch(verifyToken(t))
-});
+  verifyToken: t => dispatch(verifyToken(t)),
+})
 
 export default connect(
   msp,
-  mdp
-)(AuthLoadingScreen);
+  mdp,
+)(AuthLoadingScreen)

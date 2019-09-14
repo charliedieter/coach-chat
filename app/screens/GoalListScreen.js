@@ -4,13 +4,15 @@ import { View, SafeAreaView, TouchableOpacity } from "react-native";
 import { Text } from "native-base";
 
 import Icon from "../components/Icon";
+import DrawerIcon from "../components/DrawerIcon";
 import styles from "../utils/styles";
 
 class GoalsListScreen extends PureComponent {
   state = {};
 
-  static navigationOptions = () => ({
-    headerTitle: <Text style={styles.header1}>what is your goal?</Text>
+  static navigationOptions = ({ navigation }) => ({
+    headerTitle: <Text style={styles.header1}>what is your goal?</Text>,
+    headerRight: <DrawerIcon navigation={navigation} />
   });
 
   render() {
