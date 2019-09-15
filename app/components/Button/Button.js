@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
-import { colors } from '../utils/styles'
+import { colors } from '../../utils/styles'
 
-export default ({ children, style, icon, title, ...rest }) => (
+export default ({ style, icon, title, ...props }) => (
   <TouchableOpacity
     activeOpacity={0.6}
-    style={StyleSheet.flatten([buttonStyles.touchable, style])}
+    style={{ ...buttonStyles.touchable, ...style }}
     {...props}
   >
     <View style={buttonStyles.content}>
@@ -24,6 +24,7 @@ const buttonStyles = {
     shadowColor: colors.black,
     backgroundColor: 'white',
     borderRadius: 4,
+    marginVertical: 12,
   },
   content: {
     flexDirection: 'row',

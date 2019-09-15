@@ -13,8 +13,8 @@ Rails.application.routes.draw do
 
   resources 'goals', only: [:index]
   resources 'coaches', only: %i[index show]
-  resources 'coachings', only: %i[index show create delete]
-  resources 'messages', only: %i[index show create delete]
+  resources 'coachings', only: %i[index show create update]
+  resources 'messages', only: %i[index show create update]
 
   mount ActionCable.server => '/cable'
 end

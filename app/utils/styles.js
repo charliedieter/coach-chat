@@ -37,7 +37,13 @@ export default StyleSheet.create({
     padding: 10,
     margin: 0,
   },
-  header2: { color: colors.black, fontSize: 16 },
+
+  header2: {
+    color: colors.black,
+    fontSize: 18,
+    textAlign: 'center',
+    lineHeight: 28,
+  },
 
   listItem: {
     display: 'flex',

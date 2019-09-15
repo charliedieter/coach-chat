@@ -13,6 +13,10 @@ class User < ApplicationRecord
 
   has_many :subscriptions, foreign_key: :athlete_id, class_name: :Coaching
 
+  def active_subscriptions
+    subscriptions.where(archived_at: nil)
+  end
+
   def self.from_omniauth(access_token)
     info = access_token[:info]
 

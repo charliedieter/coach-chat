@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { View, SafeAreaView, ScrollView, Text } from 'react-native'
 
 import DrawerIcon from '../components/DrawerIcon'
+import Button from '../components/Button'
 import ChannelPreview from '../components/ChannelPreview'
 import styles from '../utils/styles'
 
@@ -14,24 +15,36 @@ class ChannelListScreen extends PureComponent {
   }
 
   render() {
-    const {
-      currentUser: { subscriptions },
-      navigation,
-    } = this.props
+    const { navigation, subscriptions } = this.props
+    const hasSubs = Object.keys(subscriptions).length
 
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView style={{ height: '100%' }}>
-          <View style={{ display: 'flex', height: '100%' }}>
-            {Object.values(subscriptions).map(subscription => (
-              <ChannelPreview
-                key={subscription.id}
-                subscription={subscription}
-                navigation={navigation}
-              />
-            ))}
+        {hasSubs ? (
+          <ScrollView style={{ height: '100%' }}>
+            {Object.values(subscriptions).map(subscription => {
+              if (!subscription) return null
+
+              return (
+                <ChannelPreview
+                  key={subscription.id}
+                  subscription={subscription}
+                  navigation={navigation}
+                />
+              )
+            })}
+          </ScrollView>
+        ) : (
+          <View style={{ ...styles.primaryPage, height: '100%', padding: 48 }}>
+            <Text style={styles.header1}>
+              Looks like you need to find a coach.
+            </Text>
+            <Button
+              title="Get started"
+              onPress={() => navigation.navigate('GoalList')}
+            />
           </View>
-        </ScrollView>
+        )}
       </SafeAreaView>
     )
   }
@@ -53,8 +66,8 @@ ChannelListScreen.navigationOptions = ({ navigation }) => ({
   ),
 })
 
-const msp = ({ session: { currentUser } }) => ({
-  currentUser,
+const msp = ({ subscriptions }) => ({
+  subscriptions,
 })
 
 export default connect(msp)(ChannelListScreen)

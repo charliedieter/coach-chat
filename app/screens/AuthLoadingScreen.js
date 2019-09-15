@@ -19,12 +19,13 @@ class AuthLoadingScreen extends Component {
 
     let next = 'Auth'
 
-    const shouldOnboard = u => !Object.keys(u.subscriptions).length
     if (currentUser) {
-      next = shouldOnboard(currentUser) ? 'CoachList' : 'ChannelList'
+      next = currentuser.has_onboarded ? 'CoachList' : 'ChannelList'
     } else if (token) {
       const { currentUser } = await this.props.verifyToken(token)
-      next = shouldOnboard(currentUser) ? 'CoachList' : 'ChannelList'
+      if (currentUser) {
+        next = currentUser.has_onboarded ? 'ChannelList' : 'CoachList'
+      }
     }
     navigation.navigate(next)
   }
@@ -34,7 +35,9 @@ class AuthLoadingScreen extends Component {
   }
 }
 
-const msp = ({ session }) => session
+const msp = ({ session }) => ({
+  session,
+})
 
 const mdp = dispatch => ({
   verifyToken: t => dispatch(verifyToken(t)),

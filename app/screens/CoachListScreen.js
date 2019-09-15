@@ -1,14 +1,8 @@
 import React, { Component } from 'react'
-import {
-  View,
-  ScrollView,
-  Image,
-  Text,
-  TouchableOpacity,
-  Button,
-} from 'react-native'
+import { View, ScrollView, Text } from 'react-native'
 
 import DrawerIcon from '../components/DrawerIcon'
+import CoachPreview from '../components/CoachPreview'
 import styles from '../utils/styles'
 import { API_ROOT } from '../utils/constants'
 
@@ -16,7 +10,6 @@ export default class extends Component {
   state = {}
 
   static navigationOptions = ({ navigation }) => {
-    const goal = navigation.getParam('name')
     return {
       headerRight: <DrawerIcon navigation={navigation} />,
       headerTitle: <Text style={styles.header2}></Text>,
@@ -36,39 +29,20 @@ export default class extends Component {
   render() {
     const { navigation } = this.props
     const { coaches } = this.state
+    const goal_id = this.props.navigation.getParam('goal_id')
 
     return (
       <ScrollView>
         <View style={{ display: 'flex', height: '100%' }}>
           {coaches &&
-            coaches.map(({ coach: { id, name, avatar } }) => {
+            coaches.map(({ coach }) => {
               return (
-                <TouchableOpacity
-                  key={`Goal--${name}`}
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderBottomColor: '#EBEBEB',
-                    borderBottomWidth: 1,
-                    padding: 20,
-                  }}
-                  onPress={() =>
-                    navigation.navigate('CoachProfile', {
-                      id,
-                      name,
-                      goal_id: this.props.navigation.getParam('goal_id'),
-                    })
-                  }
-                >
-                  <Image
-                    style={{ width: 50, height: 50, borderRadius: 25 }}
-                    source={{ uri: avatar }}
-                  />
-                  <Text style={{ ...styles.header2, marginLeft: 10 }}>
-                    {name}
-                  </Text>
-                </TouchableOpacity>
+                <CoachPreview
+                  coach={coach}
+                  key={`coach--${coach.id}`}
+                  goal_id={goal_id}
+                  navigation={navigation}
+                />
               )
             })}
         </View>

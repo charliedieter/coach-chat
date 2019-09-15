@@ -34,14 +34,15 @@ class ChannelScreen extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
     const id = this.props.navigation.getParam('id')
-    this.setState({ id }, () => this.props.getChatHistory(id))
+    this.props.getChatHistory(id)
+    this.props.subscribe(id)
   }
 
   componentWillUnmount() {
+    const id = this.props.navigation.getParam('id')
     this.props.clearMessages()
-    this.props.unsubscribe(this.state.id)
+    this.props.unsubscribe(id)
   }
 
   onChangeText = text => this.setState({ text })

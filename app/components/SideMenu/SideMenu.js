@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
 import {
   ScrollView,
   Text,
@@ -8,9 +7,9 @@ import {
   SafeAreaView,
   View,
 } from 'react-native'
-import Button from './Button'
-import { logout } from '../actions/sessionActions'
-import styles, { colors } from '../utils/styles'
+
+import { logout } from '../../actions/sessionActions'
+import styles, { colors } from '../../utils/styles'
 
 class SideMenu extends Component {
   render() {
