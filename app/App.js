@@ -3,7 +3,7 @@ import { Provider, connect } from 'react-redux'
 import * as Font from 'expo-font'
 import { Ionicons } from '@expo/vector-icons'
 
-import AppContainer from './navigation/AppNavigator'
+import AppContainer from './navigators/AppNavigator'
 import configureStore from './store'
 import { fetchGoals } from './utils/goalsApi'
 import Loader from './components/Loader'

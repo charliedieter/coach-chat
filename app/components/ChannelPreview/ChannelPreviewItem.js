@@ -6,12 +6,7 @@ import Button from '../Button'
 import DailyCheckinModal from '../Modal/CheckinModal'
 import styles, { colors } from '../../utils/styles'
 
-export default function({
-  id,
-  coach,
-  goal: { icon_name, icon_type },
-  navigation,
-}) {
+export default function({ id, coach, goal, navigation }) {
   const [isOpen, setModal] = useState(false)
 
   const onSelectChannel = () => {
@@ -47,7 +42,7 @@ export default function({
           />
           <Text style={{ fontSize: 20 }}>{coach.name}</Text>
         </View>
-        <Icon name={icon_name} type={icon_type} />
+        <Icon name={goal.icon_name} type={goal.icon_type} />
       </View>
       <Button
         title={`Check in with ${coach.name}`}

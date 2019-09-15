@@ -1,15 +1,15 @@
 import { createStackNavigator } from 'react-navigation'
 
-import CoachListScreen from '../screens/CoachListScreen'
-import GoalListScreen from '../screens/GoalListScreen'
+import CoachList from '../screens/CoachList'
+import GoalList from '../screens/GoalList'
 
 export default createStackNavigator(
   {
     GoalList: {
-      screen: GoalListScreen,
+      screen: GoalList,
     },
     CoachList: {
-      screen: CoachListScreen,
+      screen: CoachList,
     },
   },
   {
